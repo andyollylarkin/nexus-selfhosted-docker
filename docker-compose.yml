@@ -3,6 +3,8 @@ services:
     container_name: "nexus"
     image: sonatype/nexus3
     hostname: nexus
+    networks:
+      - nexus-network
     ports:
       - 0.0.0.0:8081:8081/tcp
     volumes:
@@ -12,6 +14,8 @@ services:
     container_name: "nginx"
     image: nginx:latest
     hostname: nginx
+    networks:
+      - nexus-network
     volumes:
       - ./nginx/nexus.conf:/etc/nginx/conf.d/nexus.conf:ro
     ports:
@@ -23,3 +27,7 @@ volumes:
   nexus-data:
     external: true
     name: nexus-data
+
+networks:
+  nexus:
+    name: "nexus-network"
